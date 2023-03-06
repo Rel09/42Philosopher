@@ -6,7 +6,7 @@
 /*   By: dpotvin <dpotvin@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 02:31:24 by dpotvin           #+#    #+#             */
-/*   Updated: 2023/02/28 15:40:39 by dpotvin          ###   ########.fr       */
+/*   Updated: 2023/03/06 17:00:34 by dpotvin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,11 @@ pthread_t **get_thread(uint8_t mode)
 {
 	static pthread_t *t;
 
-	if (mode == INIT) 
+	if (mode == INIT) {
 			t = malloc(get_args()->nbr_of_philo * sizeof(pthread_t));
-	
+	}
 	else if (mode == FREE)
 		free(t);
-		
 	return (&t);
 }
 

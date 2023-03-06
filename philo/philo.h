@@ -6,7 +6,7 @@
 /*   By: dpotvin <dpotvin@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 02:30:44 by dpotvin           #+#    #+#             */
-/*   Updated: 2023/02/28 15:26:22 by dpotvin          ###   ########.fr       */
+/*   Updated: 2023/03/06 10:12:11 by dpotvin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,24 @@
 # include <pthread.h>//				thread & mutex
 
 // Console Log
-# define FORK 0
-# define EATING 1
-# define SLEEPING 2
-# define THINKING 3
-# define DIED 4
-# define OTHER 5
+enum philo_state {
+	FORK,
+	EATING,
+	SLEEPING,
+	THINKING,
+	DIED,
+	OTHER
+};
+// Thread State
+enum thread_state {
+	NONE,
+	INIT,
+	FREE
+};
 // Error Log
-# define ARGS 0
-// Thread
-# define NONE 0
-# define INIT 1
-# define FREE 6
+enum errors {
+	ARGS
+};
 
 typedef enum _bool {false, true} t_bool;//					bool
 
