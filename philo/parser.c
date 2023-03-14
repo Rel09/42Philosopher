@@ -6,7 +6,7 @@
 /*   By: dpotvin <dpotvin@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 02:38:44 by dpotvin           #+#    #+#             */
-/*   Updated: 2023/02/26 03:31:34 by dpotvin          ###   ########.fr       */
+/*   Updated: 2023/03/07 10:49:28 by dpotvin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static t_bool	is_digit(char c)
 	return (c >= '0' && c <= '9');
 }
 
-static t_bool is_numeric(char *s)
+static t_bool	is_numeric(char *s)
 {
 	int		i;
 	char	c;
@@ -38,10 +38,10 @@ static t_bool is_numeric(char *s)
 	return (true);
 }
 
-static int ft_atoi(char *s)
+static int	ft_atoi(char *s)
 {
 	int	i;
-	int num;
+	int	num;
 
 	i = 0;
 	num = 0;
@@ -55,7 +55,7 @@ static int ft_atoi(char *s)
 t_bool	arg_parser(int argv, char **argc)
 {
 	uint8_t	i;
-	
+
 	if (argv < 5 || argv > 6)
 		return (false);
 	i = 1;

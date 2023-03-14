@@ -6,12 +6,14 @@
 /*   By: dpotvin <dpotvin@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 02:30:44 by dpotvin           #+#    #+#             */
-/*   Updated: 2023/03/06 10:12:11 by dpotvin          ###   ########.fr       */
+/*   Updated: 2023/03/14 02:45:42 by dpotvin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
+
+# include <unistd.h>
 
 # include <stdio.h>// 				printf
 # include <string.h>//				memset
@@ -20,8 +22,7 @@
 # include <pthread.h>//				thread & mutex
 
 // Console Log
-enum philo_state {
-	FORK,
+enum e_philo_state {
 	EATING,
 	SLEEPING,
 	THINKING,
@@ -29,30 +30,56 @@ enum philo_state {
 	OTHER
 };
 // Thread State
-enum thread_state {
-	NONE,
+enum e_thread_state {
 	INIT,
-	FREE
+	FREE,
+	JOIN,
+	GET
 };
 // Error Log
-enum errors {
+enum e_errors {
 	ARGS
 };
-
-typedef enum _bool {false, true} t_bool;//					bool
-
-typedef struct _args {//									args
-	int nbr_of_philo;
+// Bool
+typedef enum _bool {false, true}	t_bool;
+// Args
+typedef struct _args {
+	int	nbr_of_philo;
 	int	time_to_die;
 	int	time_to_eat;
 	int	time_to_sleep;
-	int eat_count;
+	int	eat_count;
 }	t_args;
 
-pthread_t	**get_thread(uint8_t mode);//						Function holding all Thread
-t_args		*get_args(void);//									Get the Arguments
-t_bool		arg_parser(int argv, char **argc);// 				Arguments Parser
-void		consolelog(uint8_t mode, int nbr, char *str);// 	Console Log
-int			errormsg(uint8_t mode);//							Error Logger & Return
+typedef struct _mutex {
+	t_bool lock;
+	t_bool fork;
+}	t_mutex;
+
+typedef struct _fork {
+	t_mutex *fork_one;
+	t_mutex *fork_two;
+}	t_fork;
+
+// Hold all the Thread
+pthread_t	**get_thread(uint8_t mode);
+// Hold all the Args
+t_args		*get_args(void);
+// Hold all the Forks
+t_mutex		*get_fork(uint8_t mode, int num);
+// Argument Parser
+t_bool		arg_parser(int argv, char **argc);
+// Console Log
+void		consolelog(uint8_t mode, int nbr, char *str);
+// Error Msg & Return
+int			errormsg(uint8_t mode);
+// Get the Mutex Lock
+pthread_mutex_t *get_mutex(uint8_t mode);
+// Give the Correct fork to the Threads
+void	give_fork(t_fork *t, int threadNum);
+
+// The Actual Function passed in all thread
+void	*nothing(void* data);
+
 
 #endif
