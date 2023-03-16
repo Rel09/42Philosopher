@@ -6,7 +6,7 @@
 /*   By: dpotvin <dpotvin@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 02:31:24 by dpotvin           #+#    #+#             */
-/*   Updated: 2023/03/14 02:56:18 by dpotvin          ###   ########.fr       */
+/*   Updated: 2023/03/16 01:36:54 by dpotvin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,19 @@
 
 void		*nothing(void* data)
 {
-	t_fork thread_fork;
-	uint8_t state;
-	int timer;
+	t_fork t;
+	
+	give_fork(&t, *(int*)data);
 
-	int	thread_number = *(int*)data;
-	give_fork(&thread_fork, thread_number);
 
 	// Mini Engine
-	state = 0;
-	timer = 0;
-	while (timer < 20) {
+	while (t.state == SLEEPING)
+	{
 		sleep(1);
-		timer += 1;
-		consolelog(SLEEPING, thread_number, "");
+		t.timer += 1;
+		consolelog(SLEEPING, t.thread_number + 1);
 	}
+	
 	return (0);
 }
 
@@ -40,13 +38,14 @@ t_args		*get_args(void)
 
 int			main(int argv, char **argc)
 {
+	int	var;
+
+	var = 0;
 	if (!arg_parser(argv, argc))
 		return (errormsg(ARGS));
-	get_fork(INIT, 0);
-	get_thread(JOIN);
-	
+	if (!get_fork(INIT, 0) || !get_thread(JOIN))
+		var = errormsg(THREAD);
 	get_fork(FREE, 0);
-	get_mutex(FREE);
 	get_thread(FREE);
-	return (0);
+	return (var);
 }
