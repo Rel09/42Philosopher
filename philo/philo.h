@@ -6,14 +6,14 @@
 /*   By: dpotvin <dpotvin@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 02:30:44 by dpotvin           #+#    #+#             */
-/*   Updated: 2023/03/16 01:37:25 by dpotvin          ###   ########.fr       */
+/*   Updated: 2023/03/18 05:02:17 by dpotvin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-# include <unistd.h>
+# include <unistd.h>//				malloc
 
 # include <stdio.h>// 				printf
 # include <string.h>//				memset
@@ -26,15 +26,18 @@ enum e_philo_state {
 	EATING,
 	SLEEPING,
 	THINKING,
-	DIED,
-	OTHER
+	DIED
 };
 // Get Toolkit
 enum e_thread_state {
 	INIT,
 	FREE,
 	JOIN,
-	GET
+	GET,
+	SET
+};
+enum e_console {
+	KILL_MUTEX
 };
 // Error Messages
 enum e_errors {
@@ -51,29 +54,24 @@ typedef struct _args {
 	int	time_to_sleep;
 	int	eat_count;
 }	t_args;
-typedef struct _mutex {
-	t_bool test;
-	t_bool test2;
-}	t_mutex;
 // Main Struct of each Thread
 typedef struct _fork {
-	int				thread_number;
-	long long int	timer;
-	uint8_t			state;
-	t_mutex 		*fork_one;
-	t_mutex 		*fork_two;
+	int						thread_number;
+	int						print_number;
+	int						max_eat_count;
+	long long int			timer;
+	long long int			sub_timer;
+	uint8_t					state;
 }	t_fork;
 
 // The Actual Function passed in all thread
-void	*nothing(void* data);
+void		*thread_main(void* data);
 // Hold all the Thread
 pthread_t	**get_thread(uint8_t mode);
 // Hold all the Args
 t_args		*get_args(void);
-// Hold all the Forks
-t_mutex		*get_fork(uint8_t mode, int num);
-// Give the Correct fork to the Threads
-void		give_fork(t_fork *t, int threadNum);
+// Hold all the Forks ( Mutexes )
+t_bool		get_fork(uint8_t mode, int num);
 // Argument Parser
 t_bool		arg_parser(int argv, char **argc);
 // Console Log

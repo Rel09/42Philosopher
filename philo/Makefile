@@ -6,7 +6,7 @@ FLAG = -Wall -Wextra -Werror
 # ---------------------------      Main      ---------------------------
 
 NAME = philo
-FILES :=	main parser logger threadforkmutex thread
+FILES :=	main parser logger thread fork thread_main
 SRCS_DIR = ./
 OBJS_DIR = ./obj/
 
