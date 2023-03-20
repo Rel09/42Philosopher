@@ -6,7 +6,7 @@
 /*   By: dpotvin <dpotvin@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 04:03:58 by dpotvin           #+#    #+#             */
-/*   Updated: 2023/03/18 04:06:36 by dpotvin          ###   ########.fr       */
+/*   Updated: 2023/03/20 00:52:19 by dpotvin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,59 +17,47 @@ static t_bool init_mutexes(pthread_mutex_t **t, t_bool **b, t_bool *swtch)
 		int	i;
 		
 		i = 0;
-		*t = malloc(get_args()->nbr_of_philo * sizeof(pthread_mutex_t));
-		*b = malloc(get_args()->nbr_of_philo * sizeof(t_bool));
+		(*t) = malloc(get_args()->nbr_of_philo * sizeof(pthread_mutex_t));
+		(*b) = malloc(get_args()->nbr_of_philo * sizeof(t_bool));
 		if (!(*t) || !(*b))
 			return (false);
 		while (i < get_args()->nbr_of_philo)
 		{
-			if (pthread_mutex_init(&(*t)[i++], 0))
+			if (pthread_mutex_init(&(*t)[i++], 0)) 
 				return (false);
 		}
-		memset(*b, 0 , get_args()->nbr_of_philo * sizeof(t_bool));
+		memset((*b), 0 , get_args()->nbr_of_philo * sizeof(t_bool));
 		*swtch = true;
 		return (true);
 }	
 // Check if both fork are free. If so - Return true
-static t_bool	is_forkpair_free(int fork_one, pthread_mutex_t **t, t_bool **b)
+static t_bool	is_forkpair_free(int f_one, int f_two, pthread_mutex_t **t, t_bool **b)
 {
-		int	fork_two;
-		t_bool ret;
+		t_bool ret;	
 		
-		if (fork_one == get_args()->nbr_of_philo - 1)
-			fork_two = 0;
-		else
-			fork_two = fork_one + 1;
-
+		pthread_mutex_lock(&(*t)[f_one]);
+		pthread_mutex_lock(&(*t)[f_two]);
 		ret = false;
-		pthread_mutex_lock(&(*t)[fork_one]);
-		pthread_mutex_lock(&(*t)[fork_two]);
-		if (!(*b)[fork_one] && !(*b)[fork_two])
+		if (!(*b)[f_one] && !(*b)[f_two])
 		{
-				(*b)[fork_one] = true;
-				(*b)[fork_two] = true;
+				(*b)[f_one] = true;
+				(*b)[f_two] = true;
 				ret = true;
 		}
-		pthread_mutex_unlock(&(*t)[fork_one]);
-		pthread_mutex_unlock(&(*t)[fork_two]);
+		pthread_mutex_unlock(&(*t)[f_one]);
+		pthread_mutex_unlock(&(*t)[f_two]);
 		return ret;
+		
 }
 // Release both Fork
-static void	free_forkpair(int fork_one, pthread_mutex_t **t, t_bool **b)
+static void	free_forkpair(int f_one, int f_two, pthread_mutex_t **t, t_bool **b)
 {
-	int fork_two;
-	
-	if (fork_one == get_args()->nbr_of_philo - 1)
-			fork_two = 0;
-		else
-			fork_two = fork_one + 1;
-			
-		pthread_mutex_lock(&(*t)[fork_one]);
-		pthread_mutex_lock(&(*t)[fork_two]);
-		(*b)[fork_one] = false;
-		(*b)[fork_two] = false;
-		pthread_mutex_unlock(&(*t)[fork_one]);
-		pthread_mutex_unlock(&(*t)[fork_two]);
+	pthread_mutex_lock(&(*t)[f_one]);
+	pthread_mutex_lock(&(*t)[f_two]);
+	(*b)[f_one] = false;
+	(*b)[f_two] = false;
+	pthread_mutex_unlock(&(*t)[f_one]);
+	pthread_mutex_unlock(&(*t)[f_two]);
 }
 // Free the Forks
 static void	free_all(pthread_mutex_t **t, t_bool **b)
@@ -87,18 +75,18 @@ static void	free_all(pthread_mutex_t **t, t_bool **b)
 		free((*b));	
 }
 // Main Fork Function
-t_bool		get_fork(uint8_t mode, int num)
+t_bool		get_fork(uint8_t mode, int f_one, int f_two)
 {
 	static t_bool			init;
 	static pthread_mutex_t	*t;
 	static t_bool			*list;
 
 	if (!init)
-		init_mutexes(&t, &list, &init);
+		return (init_mutexes(&t, &list, &init));
 	if (mode == GET)
-		return (is_forkpair_free(num, &t, &list));
+		return (is_forkpair_free(f_one, f_two, &t, &list));
 	else if (mode == SET)
-		free_forkpair(num, &t, &list);
+		free_forkpair(f_one, f_two, &t, &list);
 	else if (mode == FREE)
 		free_all(&t, &list);
 	return (true);

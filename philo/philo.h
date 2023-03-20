@@ -6,7 +6,7 @@
 /*   By: dpotvin <dpotvin@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 02:30:44 by dpotvin           #+#    #+#             */
-/*   Updated: 2023/03/18 05:02:17 by dpotvin          ###   ########.fr       */
+/*   Updated: 2023/03/20 00:21:25 by dpotvin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,24 +58,32 @@ typedef struct _args {
 typedef struct _fork {
 	int						thread_number;
 	int						print_number;
-	int						max_eat_count;
+	
+	int						fork_one_id;
+	int						fork_two_id;
+
+	int						eat_count;
+
 	long long int			timer;
 	long long int			sub_timer;
+	
 	uint8_t					state;
 }	t_fork;
 
 // The Actual Function passed in all thread
-void		*thread_main(void* data);
+void			*thread_main(void* data);
 // Hold all the Thread
-pthread_t	**get_thread(uint8_t mode);
+pthread_t		**get_thread(uint8_t mode);
 // Hold all the Args
-t_args		*get_args(void);
+t_args			*get_args(void);
 // Hold all the Forks ( Mutexes )
-t_bool		get_fork(uint8_t mode, int num);
+t_bool			get_fork(uint8_t mode, int f_one,int f_two);
 // Argument Parser
-t_bool		arg_parser(int argv, char **argc);
+t_bool			arg_parser(int argv, char **argc);
 // Console Log
-void		consolelog(uint8_t mode, int nbr);
+void			consolelog(uint8_t mode, int nbr, long long int timestamp);
+// Timestamp
+long long int	get_timestamp(void);
 // Error Msg
-int			errormsg(uint8_t mode);
+int				errormsg(uint8_t mode);
 #endif

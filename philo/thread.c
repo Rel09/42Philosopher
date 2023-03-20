@@ -6,7 +6,7 @@
 /*   By: dpotvin <dpotvin@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 01:57:14 by dpotvin           #+#    #+#             */
-/*   Updated: 2023/03/18 04:18:27 by dpotvin          ###   ########.fr       */
+/*   Updated: 2023/03/20 00:19:32 by dpotvin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ static t_bool init_thread(pthread_t **t, int **arr, t_bool *init)
 {
 	int	i;
 	
-	*t = malloc(get_args()->nbr_of_philo * sizeof(pthread_t));
-	*arr = malloc(get_args()->nbr_of_philo * sizeof(int));
+	(*t) = malloc(get_args()->nbr_of_philo * sizeof(pthread_t));
+	(*arr) = malloc(get_args()->nbr_of_philo * sizeof(int));
 	if (!(*t) || !(*arr))
 		return (false);
 	i = -1;
@@ -28,13 +28,14 @@ static t_bool init_thread(pthread_t **t, int **arr, t_bool *init)
 		if (pthread_create(&(*t)[i], 0, &thread_main, &(*arr)[i]))
 			return (false);
 	}
-	*init = true;
+	(*init) = true;
 	return (true);
 }
 // Join Thread
 static t_bool join_thread(pthread_t **t)
 {
 	int	i;
+	
 	i = 0;
 	while (i < get_args()->nbr_of_philo) {
 		if (pthread_join((*t)[i++], NULL))
