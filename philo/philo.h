@@ -6,7 +6,7 @@
 /*   By: dpotvin <dpotvin@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 02:30:44 by dpotvin           #+#    #+#             */
-/*   Updated: 2023/03/20 00:21:25 by dpotvin          ###   ########.fr       */
+/*   Updated: 2023/03/25 05:19:11 by dpotvin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,15 @@
 # include <stdlib.h>// 				uint8_t
 # include <sys/time.h>// 			gettimeofday
 # include <pthread.h>//				thread & mutex
+
+
+/*
+TODO:
+- Add Death Watcher (Thread?)
+- Add Check for eat time
+*/
+
+
 
 // Console Log && Philo State
 enum e_philo_state {
@@ -36,6 +45,7 @@ enum e_thread_state {
 	GET,
 	SET
 };
+// Console
 enum e_console {
 	KILL_MUTEX
 };
@@ -45,7 +55,10 @@ enum e_errors {
 	THREAD
 };
 // Bool
-typedef enum _bool {false, true}	t_bool;
+typedef enum _bool {
+	false, 
+	true
+}	t_bool;
 // Args
 typedef struct _args {
 	int	nbr_of_philo;

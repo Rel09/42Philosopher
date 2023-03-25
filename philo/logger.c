@@ -6,7 +6,7 @@
 /*   By: dpotvin <dpotvin@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 03:55:50 by dpotvin           #+#    #+#             */
-/*   Updated: 2023/03/20 01:00:51 by dpotvin          ###   ########.fr       */
+/*   Updated: 2023/03/25 03:55:14 by dpotvin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ long long int	get_timestamp(void)
 {
 	static pthread_mutex_t	t;
 	static t_bool	init_mutex;
-	static t_bool	init;
 	struct timeval	time;
+	static t_bool	init;
 	static long long int starttime;
 	long long int ret;
 
@@ -50,13 +50,13 @@ void	consolelog(uint8_t mode, int nbr, long long int timestamp)
 	}
 	pthread_mutex_lock(&t);
 	if (mode == EATING)
-		printf("%-19lli| %i is eating\n", timestamp, nbr);
+		printf("%lli %i is eating\n", timestamp, nbr);
 	else if (mode == SLEEPING)
-		printf("%-19lli| %i is sleeping\n", timestamp, nbr);
+		printf("%lli %i is sleeping\n", timestamp, nbr);
 	else if (mode == THINKING)
-		printf("%-19lli| %i is thinking\n", timestamp, nbr);
+		printf("%lli %i is thinking\n", timestamp, nbr);
 	else if (mode == DIED)
-		printf("%-19lli| %i died\n", timestamp, nbr);
+		printf("%lli %i died\n", timestamp, nbr);
 	pthread_mutex_unlock(&t);
 	if (mode == KILL_MUTEX)
 		pthread_mutex_destroy(&t);
@@ -67,6 +67,6 @@ int	errormsg(uint8_t mode)
 	if (mode == ARGS)
 		printf("Error with Arguments\n");
 	else if (mode == THREAD)
-		printf("Error while trying to create Thread\n");
+		printf("Error while creating Thread\n");
 	return (1);
 }

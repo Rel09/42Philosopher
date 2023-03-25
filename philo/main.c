@@ -6,7 +6,7 @@
 /*   By: dpotvin <dpotvin@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 02:31:24 by dpotvin           #+#    #+#             */
-/*   Updated: 2023/03/20 02:06:38 by dpotvin          ###   ########.fr       */
+/*   Updated: 2023/03/25 03:49:14 by dpotvin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int			main(int argv, char **argc)
 	var = 0;
 	if (!arg_parser(argv, argc))
 		return (errormsg(ARGS));
+	
 	if (!get_fork(INIT, 0, 0) || !get_thread(JOIN))
 		var = errormsg(THREAD);
 		
