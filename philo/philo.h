@@ -6,7 +6,7 @@
 /*   By: dpotvin <dpotvin@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 02:30:44 by dpotvin           #+#    #+#             */
-/*   Updated: 2023/03/25 05:19:11 by dpotvin          ###   ########.fr       */
+/*   Updated: 2023/03/25 06:28:17 by dpotvin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,6 @@
 # include <stdlib.h>// 				uint8_t
 # include <sys/time.h>// 			gettimeofday
 # include <pthread.h>//				thread & mutex
-
-
-/*
-TODO:
-- Add Death Watcher (Thread?)
-- Add Check for eat time
-*/
-
 
 
 // Console Log && Philo State
@@ -47,7 +39,7 @@ enum e_thread_state {
 };
 // Console
 enum e_console {
-	KILL_MUTEX
+	KILL_MUTEX = 10
 };
 // Error Messages
 enum e_errors {
@@ -79,6 +71,7 @@ typedef struct _fork {
 
 	long long int			timer;
 	long long int			sub_timer;
+	long long int			eat_timer;
 	
 	uint8_t					state;
 }	t_fork;
@@ -89,6 +82,8 @@ void			*thread_main(void* data);
 pthread_t		**get_thread(uint8_t mode);
 // Hold all the Args
 t_args			*get_args(void);
+// Thread that Listen to Philo's death
+t_bool			death_watcher(uint8_t mode);
 // Hold all the Forks ( Mutexes )
 t_bool			get_fork(uint8_t mode, int f_one,int f_two);
 // Argument Parser

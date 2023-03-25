@@ -6,7 +6,7 @@
 /*   By: dpotvin <dpotvin@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 02:31:24 by dpotvin           #+#    #+#             */
-/*   Updated: 2023/03/25 03:49:14 by dpotvin          ###   ########.fr       */
+/*   Updated: 2023/03/25 06:23:01 by dpotvin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ int			main(int argv, char **argc)
 	
 	if (!get_fork(INIT, 0, 0) || !get_thread(JOIN))
 		var = errormsg(THREAD);
-		
 	consolelog(KILL_MUTEX, 0, 0);
+	death_watcher(KILL_MUTEX);
 	get_fork(FREE, 0, 0);
 	get_thread(FREE);
 	return (var);

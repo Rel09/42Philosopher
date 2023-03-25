@@ -6,7 +6,7 @@
 /*   By: dpotvin <dpotvin@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 01:57:14 by dpotvin           #+#    #+#             */
-/*   Updated: 2023/03/20 00:19:32 by dpotvin          ###   ########.fr       */
+/*   Updated: 2023/03/25 06:05:45 by dpotvin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,27 @@ static void free_thread(pthread_t **t, int **arr)
 		free((*t));
 	if ((*arr))
 		free((*arr));
+}
+// Functions that listen for death of a philo
+t_bool		death_watcher(uint8_t mode) {
+	static pthread_mutex_t	t;
+	static t_bool			init;
+	static t_bool 			state;
+	
+	if (!init)
+	{
+		pthread_mutex_init(&t, 0);
+		init = true;
+	}
+	if (mode == SET)
+	{
+		pthread_mutex_lock(&t);
+		state = true;
+		pthread_mutex_unlock(&t);
+	}
+	else if (mode == KILL_MUTEX)
+		pthread_mutex_destroy(&t);
+	return (state);
 }
 // Init, Join & Free the Threads
 pthread_t	**get_thread(uint8_t mode) 

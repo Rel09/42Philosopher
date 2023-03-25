@@ -6,7 +6,7 @@
 /*   By: dpotvin <dpotvin@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 04:03:58 by dpotvin           #+#    #+#             */
-/*   Updated: 2023/03/20 00:52:19 by dpotvin          ###   ########.fr       */
+/*   Updated: 2023/03/25 06:06:52 by dpotvin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static void	free_all(pthread_mutex_t **t, t_bool **b)
 		i = 0;
 		while (i < get_args()->nbr_of_philo)
 			pthread_mutex_destroy(&(*t)[i++]);
-		free(t);
+		free(*t);
 	}
 	if ((*b)) 
 		free((*b));	
