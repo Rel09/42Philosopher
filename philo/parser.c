@@ -6,7 +6,7 @@
 /*   By: dpotvin <dpotvin@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 02:38:44 by dpotvin           #+#    #+#             */
-/*   Updated: 2023/03/07 10:49:28 by dpotvin          ###   ########.fr       */
+/*   Updated: 2023/03/30 03:00:39 by dpotvin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,9 @@ t_bool	arg_parser(int argv, char **argc)
 	get_args()->time_to_sleep = ft_atoi(argc[4]);
 	if (argv == 6)
 		get_args()->eat_count = ft_atoi(argc[5]);
+	if (get_args()->nbr_of_philo < 1
+		|| get_args()->time_to_die < 60 || get_args()->time_to_eat < 60
+		|| get_args()->time_to_sleep < 60)
+		return (false);
 	return (true);
 }
