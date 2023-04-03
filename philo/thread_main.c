@@ -6,7 +6,7 @@
 /*   By: dpotvin <dpotvin@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 04:19:53 by dpotvin           #+#    #+#             */
-/*   Updated: 2023/03/30 02:56:33 by dpotvin          ###   ########.fr       */
+/*   Updated: 2023/04/03 18:50:15 by dpotvin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ static void	thinking(long long int timer, t_fork *t)
 	{
 		t->sub_timer = get_timestamp();
 		t->state = EATING;
-		consolelog(TOOKFORK, t->print_number, get_timestamp());
-		consolelog(TOOKFORK, t->print_number, get_timestamp());
-		consolelog(EATING, t->print_number, get_timestamp());
+		consolelog(TOOKFORK, t->print_number);
+		consolelog(TOOKFORK, t->print_number);
+		consolelog(EATING, t->print_number);
 	}
 }
 
@@ -32,7 +32,7 @@ static void	eating(long long int current_timer, t_fork *t)
 	{
 		t->sub_timer = get_timestamp();
 		t->state = SLEEPING;
-		consolelog(SLEEPING, t->print_number, get_timestamp());
+		consolelog(SLEEPING, t->print_number);
 		get_fork(SET, t->fork_one_id, t->fork_two_id);
 		if (t->fivearg)
 			t->eat_count++;
@@ -46,7 +46,7 @@ static void	sleeping(long long int current_timer, t_fork *t)
 	{
 		t->sub_timer = get_timestamp();
 		t->state = THINKING;
-		consolelog(THINKING, t->print_number, get_timestamp());
+		consolelog(THINKING, t->print_number);
 	}
 }
 

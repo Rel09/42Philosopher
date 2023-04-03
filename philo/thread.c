@@ -6,7 +6,7 @@
 /*   By: dpotvin <dpotvin@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 01:57:14 by dpotvin           #+#    #+#             */
-/*   Updated: 2023/03/29 21:51:11 by dpotvin          ###   ########.fr       */
+/*   Updated: 2023/04/03 18:14:02 by dpotvin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,9 @@ t_bool	death_watcher(uint8_t mode)
 	static pthread_mutex_t	t;
 	static t_bool			init;
 	static t_bool			state;
+	t_bool					temp;
 
+	temp = 0;
 	if (!init)
 	{
 		pthread_mutex_init(&t, 0);
@@ -73,9 +75,13 @@ t_bool	death_watcher(uint8_t mode)
 		state = true;
 		pthread_mutex_unlock(&t);
 	}
-	else if (mode == KILL_MUTEX)
-		pthread_mutex_destroy(&t);
-	return (state);
+	if (mode == GET)
+	{
+		pthread_mutex_lock(&t);
+		temp = state;
+		pthread_mutex_unlock(&t);
+	}
+	return (temp);
 }
 
 // Init, Join & Free the Threads

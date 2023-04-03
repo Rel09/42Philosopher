@@ -2,6 +2,7 @@
 CC = gcc
 RM = rm -rf
 FLAG = -Wall -Wextra -Werror
+#-fsanitize=thread
 
 # ---------------------------      Main      ---------------------------
 

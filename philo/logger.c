@@ -6,7 +6,7 @@
 /*   By: dpotvin <dpotvin@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 03:55:50 by dpotvin           #+#    #+#             */
-/*   Updated: 2023/03/30 00:05:57 by dpotvin          ###   ########.fr       */
+/*   Updated: 2023/04/03 19:01:15 by dpotvin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ long long int	get_timestamp(void)
 }
 
 // Basic Console Logger
-void	consolelog(uint8_t mode, int nbr, long long int timestamp)
+void	consolelog(uint8_t mode, int nbr)
 {
 	static pthread_mutex_t	t;
 	static t_bool			init;
@@ -48,16 +48,19 @@ void	consolelog(uint8_t mode, int nbr, long long int timestamp)
 		init = true;
 	}
 	pthread_mutex_lock(&t);
-	if (mode == EATING)
-		printf("%lli %i is eating\n", timestamp, nbr);
-	else if (mode == SLEEPING)
-		printf("%lli %i is sleeping\n", timestamp, nbr);
-	else if (mode == THINKING)
-		printf("%lli %i is thinking\n", timestamp, nbr);
-	else if (mode == DIED)
-		printf("%lli %i died\n", timestamp, nbr);
-	else if (mode == TOOKFORK)
-		printf("%lli %i has taken a fork\n", timestamp, nbr);
+	if (!death_watcher(GET))
+	{
+		if (mode == EATING)
+			printf("%lli %i is eating\n", get_timestamp(), nbr);
+		else if (mode == SLEEPING)
+			printf("%lli %i is sleeping\n", get_timestamp(), nbr);
+		else if (mode == THINKING)
+			printf("%lli %i is thinking\n", get_timestamp(), nbr);
+		else if (mode == DIED && !death_watcher(GET))
+			printf("%lli %i died\n", get_timestamp(), nbr);
+		else if (mode == TOOKFORK)
+			printf("%lli %i has taken a fork\n", get_timestamp(), nbr);
+	}
 	pthread_mutex_unlock(&t);
 	if (mode == KILL_MUTEX)
 		pthread_mutex_destroy(&t);

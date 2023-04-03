@@ -6,7 +6,7 @@
 /*   By: dpotvin <dpotvin@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 02:30:44 by dpotvin           #+#    #+#             */
-/*   Updated: 2023/03/30 01:02:08 by dpotvin          ###   ########.fr       */
+/*   Updated: 2023/04/03 16:57:58 by dpotvin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ t_bool			get_fork(uint8_t mode, int f_one, int f_two);
 // Argument Parser
 t_bool			arg_parser(int argv, char **argc);
 // Console Log
-void			consolelog(uint8_t mode, int nbr, long long int timestamp);
+void			consolelog(uint8_t mode, int nbr);
 // Timestamp
 long long int	get_timestamp(void);
 // Error Msg
