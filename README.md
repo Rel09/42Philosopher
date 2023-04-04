@@ -7,6 +7,7 @@ as we need to save every bit of CPU usage we can to ensure the survival of our p
 Memory leaks, Data Race or anything like this, equal fail.
 ```
 
+## Dining Philosophers problem
 ```
 • This project is to be coded in C, following the 42 Norm. Any leak, crash, undefined
 behavior or norm error means 0 to the project.
