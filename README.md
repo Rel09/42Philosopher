@@ -4,10 +4,13 @@ This project is a training to multi-threads/multi-process programming with the u
 simulating a twist of the famous Dining Philosophers problem, all with the same basic rules.
 This project is also a good lesson in C optimization
 as we need to save every bit of CPU usage we can to ensure the survival of our philosophers.
+
 Memory leaks, Data Race or anything like this, equal fail.
+
+ps: PDF Also requires us to put everything in a philo folder, in the root of the project.
 ```
 
-## Dining Philosophers problem
+## Rules
 ```
 • This project is to be coded in C, following the 42 Norm. Any leak, crash, undefined
 behavior or norm error means 0 to the project.
